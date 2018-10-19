@@ -1,4 +1,4 @@
-# STEP 0: load required packages
+# load required packages
 # load the reshape2 package (will be used in STEP 5)
 library(reshape2)
 
