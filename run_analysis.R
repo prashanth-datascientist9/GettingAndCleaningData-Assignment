@@ -1,11 +1,9 @@
-## STEP 0: load required packages
-
+# STEP 0: load required packages
 # load the reshape2 package (will be used in STEP 5)
 library(reshape2)
 
 
-## STEP 1: Merges the training and the test sets to create one data set
-
+# STEP 1: Merges the training and the test sets to create one data set
 # read data into data frames
 subject_train <- read.table("./train/subject_train.txt")
 subject_test <- read.table("./test/subject_test.txt")
@@ -33,9 +31,8 @@ test <- cbind(subject_test, y_test, X_test)
 combined <- rbind(train, test)
 
 
-## STEP 2: Extracts only the measurements on the mean and standard
-## deviation for each measurement.
-
+# STEP 2: Extracts only the measurements on the mean and standard
+# deviation for each measurement.
 # determine which columns contain "mean()" or "std()"
 meanstdcols <- grepl("mean\\(\\)", names(combined)) |
     grepl("std\\(\\)", names(combined))
@@ -47,11 +44,10 @@ meanstdcols[1:2] <- TRUE
 combined <- combined[, meanstdcols]
 
 
-## STEP 3: Uses descriptive activity names to name the activities
-## in the data set.
-## STEP 4: Appropriately labels the data set with descriptive
-## activity names. 
-
+# STEP 3: Uses descriptive activity names to name the activities
+# in the data set.
+# STEP 4: Appropriately labels the data set with descriptive
+# activity names. 
 # convert the activity column from integer to factor
 combined$activity <- factor(combined$activity, labels=c("Walking",
     "Walking Upstairs", "Walking Downstairs", "Sitting", "Standing", "Laying"))
@@ -59,7 +55,6 @@ combined$activity <- factor(combined$activity, labels=c("Walking",
 
 ## STEP 5: Creates a second, independent tidy data set with the
 ## average of each variable for each activity and each subject.
-
 # create the tidy data set
 melted <- melt(combined, id=c("subjectID","activity"))
 tidy <- dcast(melted, subjectID+activity ~ variable, mean)
